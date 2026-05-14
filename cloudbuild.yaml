@@ -1,0 +1,10 @@
+steps:
+- name: gcr.io/cloud-builders/docker
+  args: ["build", 
+        "--build-arg", 
+        "GCR_REPO=$PROJECT_ID", 
+        "-t", 
+        "gcr.io/${_PROJECT}/gcp-cloud-new:${_IMAGE_TAG}", 
+        "."]
+images:
+- gcr.io/${_PROJECT}/gcp-cloud-new:${_IMAGE_TAG}

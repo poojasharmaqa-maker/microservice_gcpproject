@@ -1,0 +1,29 @@
+steps:
+- name: gcr.io/cloud-builders/docker
+  args:
+  - build
+  - --build-arg
+  - PROJECT_ID=$_PROJECT_ID
+  - --build-arg
+  - FOLDER=$_FOLDER
+  - --build-arg
+  - BASE_REPO_NAME=$_BASE_REPO_NAME
+  - -t
+  - us-east4-docker.pkg.dev/$_PROJECT_ID/$_FOLDER/gcp-streaming-new:${_IMAGE_TAG}
+  - .
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: bash
+  args:
+  - -c
+  - docker tag us-east4-docker.pkg.dev/$_PROJECT_ID/$_FOLDER/gcp-streaming-new:${_IMAGE_TAG} us-east4-docker.pkg.dev/svc-equ-pii-sys/gcp-cloud-new/gcp-streaming-new:${_IMAGE_TAG}
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: bash
+  args:
+  - -c
+  - docker push us-east4-docker.pkg.dev/svc-equ-pii-sys/gcp-cloud-new/gcp-streaming-new:${_IMAGE_TAG}
+
+substitutions:
+  _IMAGE_TAG: '${TAG_NAME}'
+  _PROJECT_ID: 'svc-equ-pii-sys'
+  _FOLDER: 'gcp-cloud-new'
+  _BASE_REPO_NAME: 'gcp-base'

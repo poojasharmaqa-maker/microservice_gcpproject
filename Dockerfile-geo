@@ -1,0 +1,12 @@
+FROM registryvdc3.digitalriverws.net/gcp-base:3.7.2
+
+LABEL maintainer="Akash Das <dakash@digitalriver.com@digitalriver.com>"
+
+ADD ./src/main/scripts/*.sh ./
+ADD ./*.conf ./
+ADD ./src/main/resources/*.properties /resources/
+COPY ./IP2Location/ ./
+ADD ./src/main/python/*/*.py ./
+ADD ./src/test/python/*/*.py ./
+RUN dos2unix *.sh
+RUN chmod +x *.sh
